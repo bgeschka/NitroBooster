@@ -1,0 +1,11 @@
+## Interface: 30300
+## Title: NitroBooster
+## Notes: Helper addon for nitrobooster enchant
+## Author: bgeschka
+## Version: 0.1
+## SavedVariablesPerCharacter: NitroBoosterConfig
+## OptionalDeps: Ace3, LibCompress, LibSharedMedia-3.0, AceGUI-3.0-SharedMediaWidgets
+
+embeds.xml
+lib_bg2.lua
+NitroBooster.lua
