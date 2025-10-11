@@ -200,7 +200,7 @@ end
 
 function nb_config_get_interval(ctx)
 	local default = 0.1
-	local interval= default 
+	local interval= default
 	if bg_config_get(ctx, "interval") then
 		interval = tonumber(bg_config_get(ctx, "interval"))
 		if not interval  then
@@ -215,6 +215,27 @@ function nb_print_help()
 	print(" /nb gui -- show config window")
 	print(" /nb list -- show current boots")
 	print(" /nb reset -- resets the configuration");
+	print(" /nb toggle -- turn auto-swap on/off");
+	print(" /nb off -- turn auto-swap off");
+	print(" /nb on -- turn auto-swap on");
+end
+
+
+function nb_on(ctx)
+	bg_config_set(ctx, "enabled", true)
+	print("NitroBooster enalbed");
+end
+function nb_off(ctx)
+	bg_config_set(ctx, "enabled", false)
+	print("NitroBooster disabled");
+end
+function nb_toggle(ctx)
+	local state = bg_config_get(ctx, "enabled")
+	if state then
+		nb_off(ctx)
+	else
+		nb_on(ctx)
+	end
 end
 
 bg_context_new("NitroBooster", "NitroBoosterConfig", function(ctx)
@@ -264,16 +285,18 @@ bg_context_new("NitroBooster", "NitroBoosterConfig", function(ctx)
 			return false;
 		end
 
+		if param1 == "on" then
+			nb_on(ctx)
+			return false;
+		end
+
+		if param1 == "off" then
+			nb_off(ctx)
+			return false;
+		end
 
 		if param1 == "toggle" then
-			local state = bg_config_get(ctx, "enabled")
-			local newstate = not state
-			bg_config_set(ctx, "enabled", newstate)
-			if newstate then
-				print("NitroBooster enabled");
-			else
-				print("NitroBooster diabled");
-			end
+			nb_toggle(ctx)
 			return false;
 		end
 
