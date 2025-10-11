@@ -303,3 +303,11 @@ function bg_table_len(T)
 	for _ in pairs(T) do count = count + 1 end
 	return count
 end
+
+function bg_am_i_dead()
+	if UnitIsDead("PLAYER") then
+		return true
+	else
+		return false
+	end
+end

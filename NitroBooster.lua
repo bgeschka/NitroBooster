@@ -125,6 +125,10 @@ function nb_next(ctx)
 		return false;
 	end
 
+	if bg_am_i_dead() then
+		return false;
+	end
+
 	-- if PlayerHasBuff("Nitro Boosts") then
 	--	-- print("already boooosting");
 	--	return false;
@@ -257,6 +261,19 @@ bg_context_new("NitroBooster", "NitroBoosterConfig", function(ctx)
 			bg_dbg(ctx, "listing boots>>>>");
 			bg_dbg_table(ctx, boots, 2);
 			bg_dbg(ctx, "done listing boots<<<<");
+			return false;
+		end
+
+
+		if param1 == "toggle" then
+			local state = bg_config_get(ctx, "enabled")
+			local newstate = not state
+			bg_config_set(ctx, "enabled", newstate)
+			if newstate then
+				print("NitroBooster enabled");
+			else
+				print("NitroBooster diabled");
+			end
 			return false;
 		end
 
