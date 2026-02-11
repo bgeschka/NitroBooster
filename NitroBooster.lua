@@ -40,7 +40,7 @@ function nb_item_get_state(ctx, itemid)
 
 	-- boots in bag and unused, but equipping will trigger cd
 	if not equipped and cd_left < 30 then
-		cd_left = 30
+		cd_left = 33
 	end
 
 
@@ -210,7 +210,7 @@ function nb_config_get_interval(ctx)
 	return interval
 end
 
-function nb_print_help()
+function nb_print_help(ctx)
 	print("Welcome to Nitrobooster!")
 	print(" /nb gui -- show config window")
 	print(" /nb list -- show current boots")
@@ -218,16 +218,25 @@ function nb_print_help()
 	print(" /nb toggle -- turn auto-swap on/off");
 	print(" /nb off -- turn auto-swap off");
 	print(" /nb on -- turn auto-swap on");
+	nb_print_onoff(ctx);
 end
 
+function nb_print_onoff(ctx)
+	local state = bg_config_get(ctx, "enabled")
+	if state then
+		print("NitroBooster enalbed");
+	else
+		print("NitroBooster disabled");
+	end
+end
 
 function nb_on(ctx)
 	bg_config_set(ctx, "enabled", true)
-	print("NitroBooster enalbed");
+	nb_print_onoff(ctx);
 end
 function nb_off(ctx)
 	bg_config_set(ctx, "enabled", false)
-	print("NitroBooster disabled");
+	nb_print_onoff(ctx);
 end
 function nb_toggle(ctx)
 	local state = bg_config_get(ctx, "enabled")
@@ -312,7 +321,7 @@ bg_context_new("NitroBooster", "NitroBoosterConfig", function(ctx)
 		-- print("hi");
 		-- bg_dbg(ctx, "hiiii!");
 		--
-		nb_print_help();
+		nb_print_help(ctx);
 	end);
 
 	bg_timer_interval(ctx, nb_config_get_interval(ctx), function (ctx)
